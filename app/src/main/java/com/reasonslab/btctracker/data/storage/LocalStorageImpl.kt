@@ -2,7 +2,8 @@ package com.reasonslab.btctracker.data.storage
 
 import android.content.SharedPreferences
 import com.reasonslab.btctracker.data.model.Rate
-
+// Realised LocalStorage based on abstraction, so in the future it will be easy to replace preference
+// to userCore,room,realm, fileUtils/
 class LocalStorageImpl(val preference: SharedPreferences) : LocalStorage {
 
     override fun saveRate(rateItem: Rate) {

@@ -17,6 +17,7 @@ import com.reasonslab.btctracker.ui.MainActivity
 class NotificationHelper(private val context: Context) {
 
     fun show(action: String) {
+        // TODO: Handle dynamic channels,now ChannelID is the same for all type of notifications.
         val channelId = CHANNEL_ID
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -47,6 +48,7 @@ class NotificationHelper(private val context: Context) {
             setContentIntent(getPendingIntent(context, action, PUSH_ID))
             setAutoCancel(true)
             createGroup(channelId)
+            // TODO: Handle dynamic id, now PUSH_ID is the same for all notifications
             notificationManager.notify(PUSH_ID, builder.build())
         }
     }
@@ -93,7 +95,6 @@ class NotificationHelper(private val context: Context) {
             notificationManager.notify(PUSH_ID, builder.build())
         }
     }
-
 
     private fun createGroup(chanelId: String) {
         val builder = NotificationCompat.Builder(context, chanelId)

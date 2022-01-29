@@ -29,7 +29,7 @@ class RateViewModel(
     private val getLimitsUseCase: GetLimitsUseCase,
     private val saveLimitsUseCase: SaveLimitsUseCase
 ) : ViewModel() {
-
+    // TODO: replace with flow
     private val _uiEvent: MutableLiveData<RateViewState> = MutableLiveData<RateViewState>()
     val uiEvent: LiveData<RateViewState> = _uiEvent
 
@@ -69,7 +69,9 @@ class RateViewModel(
                 })
         }
     }
-
+    // Worker is a good choice for background tasks. Cuz it takes into accaunt Android Stanby,Doze modes,locks.
+    // But worker is not a good solution for BTC price monitoring. Cuz BTC price is changed each seconds.
+    // It would be nice to use WebSockets ws:// or graphql.
     fun mointorPrice(appContext: Context) {
         //TODO: Add constraints for worker
         WorkManager.getInstance(appContext)

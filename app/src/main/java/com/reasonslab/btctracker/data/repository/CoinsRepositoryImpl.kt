@@ -18,6 +18,7 @@ class CoinsRepositoryImpl(val apiService: ApiService, val storage: LocalStorage)
             val rate = response.getRateWithLastUpdate()
             storage.saveRate(rate)
             success.invoke(response)
+            //TODO: don't write general exceptions, handle API errors and local errors(NoInternet)
         } catch (e: Exception) {
             fail.invoke(e)
         }

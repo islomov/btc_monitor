@@ -37,14 +37,15 @@ class PriceMonitorWorker(
             val min = range.first.toDoubleOrNull()
             val max = range.second.toDoubleOrNull()
             val price = rate.rate_float.toDouble()
-            if (min != null && min <= price) {
+            if (min != null && min >= price) {
                 notificationHelper.show("BTC price hit minimum value")
             }
-            if (max != null && max >= price) {
+            if (max != null && max <= price) {
                 notificationHelper.show("BTC Price hit maximum value")
             }
             return@execute
         }, fail = {
+            // TODO: Handle Fail case
             return@execute
         })
         return Result.success()

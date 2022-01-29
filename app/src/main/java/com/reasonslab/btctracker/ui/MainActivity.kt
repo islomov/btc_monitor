@@ -6,7 +6,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.reasonslab.btctracker.data.model.Rate
 import com.reasonslab.btctracker.databinding.ActivityMainBinding
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +31,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.saveLimit(min.toString(), max.toString())
                 binding?.editMin?.setText("",TextView.BufferType.EDITABLE)
                 binding?.editMax?.setText("",TextView.BufferType.EDITABLE)
+                // TODO: Handle keyboard show and hide.Change windowSoftInputMode based on keyboard appearance.
+                // In small devices, keyboard could hide edittext.
             }
         }
         viewModel.getCachedPrice()
