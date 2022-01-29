@@ -75,7 +75,7 @@ class RateViewModel(
         WorkManager.getInstance(appContext)
             .enqueueUniquePeriodicWork(
                 "btc-price-monitor",
-                ExistingPeriodicWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 PeriodicWorkRequestBuilder<PriceMonitorWorker>(15, TimeUnit.MINUTES).build())
         addMonitorChangeObserver()
     }
