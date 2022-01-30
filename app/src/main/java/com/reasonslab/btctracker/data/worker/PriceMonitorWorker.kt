@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.math.roundToInt
 
 @KoinApiExtension
 class PriceMonitorWorker(
@@ -34,13 +35,14 @@ class PriceMonitorWorker(
             GlobalEvent.push(Events.BTCPriceChangedEvent(it.getRateWithLastUpdate()))
             val range = getLimitsUseCase.execute(DefParams())
             val rate = it.getRateWithLastUpdate()
-            val min = range.first.toDoubleOrNull()
-            val max = range.second.toDoubleOrNull()
-            val price = rate.rate_float.toDouble()
-            if (min != null && min >= price) {
+            // Dont round, use BigDecimal, to handle floating point in the code.
+            val min = (range.first.toFloatOrNull() ?: 0f ).roundToInt()
+            val max = (range.second.toFloatOrNull() ?: 0f).roundToInt()
+            val price = rate.rate_float.roundToInt()
+            if (min >= price) {
                 notificationHelper.show("BTC price hit minimum value")
             }
-            if (max != null && max <= price) {
+            if (max <= price) {
                 notificationHelper.show("BTC Price hit maximum value")
             }
             return@execute
